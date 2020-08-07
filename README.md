@@ -1,6 +1,6 @@
 # Automatic Number Plate Recognition Proof of Concept with Azure Cognitive Services
 
-Automatic number-plate recognition is a technology that uses optical character recognition on images to read vehicle registration plates. This repository will illistrate how [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/#overview) can be used to develop such a solution.
+Automatic number-plate recognition is a technology that uses optical character recognition on images to read vehicle registration plates. This repository will illustrate how [Azure Cognitive Services](https://azure.microsoft.com/en-us/services/cognitive-services/#overview) can be used to develop such a solution.
 
 [Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/home) will be used to develop object detection model will be used to identify the coordinates of a vehicle's number plate in an image. This will be used to crop the image to focus on the number plate. The [Read API](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-recognizing-text) will than use this cropped image to perform optical character recognition (OCR) to extract the number plate from the image.
 
@@ -31,17 +31,21 @@ Note: this will create a directory called `images`.
 
 ### Develop Custom Vision Model
 
-To develop a custom vision model head over to [Custom Vision](https://www.customvision.ai) and use a subset of the images that have been downlaoded in the prior step. This can be done by:
+To develop a custom vision model head over to [Custom Vision](https://www.customvision.ai) and use a subset of the images that have been downlaoded in the prior step. 
+
+This can be done by:
 
 1. Signing in and create a new project. Choose your own Name, Description and Resource (using your Azure subscription). Select `Object Detection` as the Project Type and leave the Domain as `General`.
 
-2. Upload at least 15 images, select the number plate using the editor (give the number plate objects the same same e.g. `number-plate`).
+2. Upload at least 15 images, select the number plate using the editor (give the number plate objects the same e.g. `number-plate`).
 
 3. Train a model once all images have been loaded. Once training is complete a set of performance metrics will be displayed. The `Quick Training` option should be sufficient for this step.
 
 4. Published the trained model as a REST API. Publishing generates the URL and authentication key for this service. This will be used in the next step.
 
-## Create Configuration File
+Note: For more information follow the instructions in the [Custom Vision Object Detector Quickstart guide](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/get-started-build-detector).
+
+### Create Configuration File
 
 Include the endpoints and access keys for the Custom Vision service and Computer Vision service in a file called `cognitive-services.ini` in a directory called `configuration`.
 
@@ -50,7 +54,7 @@ This file should be as follows:
 ```ini
 [custom_vision]
 key = <custom vision api key>
-imgurl = <custom vision url (should end with /image)>
+imgurl = <custom vision image file url>
 
 [computer_vision]
 key = <computer vision api key>
